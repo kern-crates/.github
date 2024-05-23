@@ -4,3 +4,4 @@ yuoo655/ext4_rs
 shilei-massclouds/arch_boot
 shilei-massclouds/early_console
 shilei-massclouds/axdtb
+AsyncModules/embassy-priority
