@@ -56,7 +56,6 @@ Starry-OS/driver_block
 Starry-OS/kernel_guard
 Starry-OS/arm_gic
 Starry-OS/axstd
-Starry-OS/axlibc
 Starry-OS/axstarry
 Starry-OS/arch_boot
 Starry-OS/axtrap
@@ -64,3 +63,4 @@ Starry-OS/arceos_api
 Starry-OS/linux_syscall_api
 Starry-OS/arceos_posix_api
 Starry-OS/axfeat
+Starry-OS/Starry
