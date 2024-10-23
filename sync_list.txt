@@ -87,3 +87,4 @@ qclic/e1000e-frame
 qclic/sparreal-os
 ZR233/arm-gic-driver
 ZR233/arm-pl011-rs
+ZR233/ostool
