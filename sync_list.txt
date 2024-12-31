@@ -48,6 +48,9 @@ arceos-org/timer_list
 elliott10/e1000-driver
 elliott10/lwext4_rust
 guoweikang/osl
+os-checker/docs
+os-checker/os-checker
+os-checker/os-checker.github.io
 qclic/e1000e-frame
 qclic/fdt-parser
 qclic/sparreal-os
