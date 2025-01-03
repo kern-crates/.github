@@ -3,7 +3,7 @@ Azure-stars/elf_parser_rs
 Byte-OS/ByteOS
 Byte-OS/lose-net-stack
 Byte-OS/polyhal
-Starry-OS/Starry-New
+Starry-OS/Starry-Old
 ZR233/arm-gic-driver
 ZR233/arm-pl011-rs
 ZR233/ostool
