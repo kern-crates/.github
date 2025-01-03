@@ -41,4 +41,4 @@ async function main() {
 
 }
 
-main().then(() => log("\nMain thread done.")).catch(err => console.error(err));
+main().then(() => log("\nMain thread done."));

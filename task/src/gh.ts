@@ -29,6 +29,7 @@ export function sync_or_fork(sync_list: UserRepo[], owned_repos: OwnedRepo[], ow
       // need forking
       if (do_fork(owner, outer, repo_name)) {
         repos.push(repo_name);
+        log(chalk.white(chalk.bgRed(`${repo_name} is added to kern-crates org.`)));
       } else {
         throw_err(`${repo_name} is not forked.`);
       }
