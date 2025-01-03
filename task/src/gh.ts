@@ -17,7 +17,7 @@ export type Output = {
  * 该函数在执行 fork 或者 sync 命令过程中出现错误，会抛出错误，不再往后运行；
  * 因此该清单的每个仓库保证完成了相应的操作。
  */
-export function sync_or_fork(sync_list: UserRepo[], exclude_list: UserRepo[], owned_repos: OwnedRepo[], owner: string): string[] {
+export function sync_or_fork(sync_list: UserRepo[], owned_repos: OwnedRepo[], owner: string): string[] {
   const non_onwed = owned_repos.map(val => val.non_owned);
   let repos: string[] = [];
 
