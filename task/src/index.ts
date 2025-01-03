@@ -30,7 +30,7 @@ async function main() {
 
   const owned_repos = gen_owned_repos(owner, repositoryOwner);
 
-  const repos = sync_or_fork(sync_list, exclude_list, owned_repos, owner);
+  const repos = sync_or_fork(sync_list, owned_repos, owner);
 
   const output = gen_output(repos, owned_repos, exclude_list);
   log("\nrepo_list.length =", output.repo_list.length);
@@ -41,4 +41,4 @@ async function main() {
 
 }
 
-main().then(() => log("\nMain thread done.")).catch(err => console.error(err));
+main().then(() => log("\nMain thread done."));
