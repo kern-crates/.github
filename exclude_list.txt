@@ -6,3 +6,6 @@ kern-crates/kern-crates.github.io
 rcore-os/libc-test
 os-checker/docs
 os-checker/os-checker.github.io
+AsyncModules/embassy-priority
+qclic/e1000e-frame
+seL4/rust-sel4
