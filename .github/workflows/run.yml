@@ -24,10 +24,10 @@ jobs:
           EXECUTE: true
         run: cd task && npm install && npm run start
 
-      - name: Upload repo_list JSONs
+      - name: Upload repo_list_raw.json os-checker_config.json
         env:
           tag: v0.2.1
-          files: repo_list.json repo_list_raw.json os-checker_config.json
+          files: repo_list_raw.json os-checker_config.json
         run: |
           cd task
           ls -alh
