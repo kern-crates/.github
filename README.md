@@ -2,9 +2,7 @@
 
 [模块发布方式与需求](/profile/module_requirement.md)
 
-[模块列表](https://kern-crates.github.io/.github/)
-
-[添加仓库到 kern-crates 组织](/profile/fork_list.md)
+[模块列表](https://kern-crates.github.io)
 
 <!--
 
