@@ -16,8 +16,8 @@ export function to_string(user_repo: UserRepo) {
   return `${user_repo.user}/${user_repo.repo}`;
 }
 
-export function gen_owned_repos(owner: string, repos: query.RepositoryOwner): OwnedRepo[] {
-  return repos.repositories.nodes.map(repo => {
+export function gen_owned_repos(owner: string, q: query.RepositoryOwner): OwnedRepo[] {
+  const repos = q.repositories.nodes.map(repo => {
     const owned = { user: owner, repo: repo.name, isArchived: repo.isArchived };
     const non_owned = repo.parent && {
       user: repo.parent.owner.login,
@@ -26,6 +26,8 @@ export function gen_owned_repos(owner: string, repos: query.RepositoryOwner): Ow
     };
     return { owned, non_owned }
   });
+  repos.sort((a, b) => to_string(a.owned).localeCompare(to_string(b.owned)));
+  return repos;
 }
 
 // If parent repo is not archived, while the org repo is, warn against it.

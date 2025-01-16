@@ -9,12 +9,11 @@ export type Output = {
 };
 
 // Scan item from fork_list, if it's not found in non_onwed repos, do the fork.
-export function fork(fork_list: UserRepo[], non_owned: UserRepo[], org: string) {
+export function fork(fork_list: UserRepo[], non_owned: Set<string>, org: string) {
   for (const outer of fork_list) {
     const repo_name = to_string(outer);
-    const pos = non_owned.findIndex(val => val.user === outer.user && val.repo === outer.repo);
 
-    if (pos === -1) {
+    if (non_owned.has(repo_name)) {
       // need forking
       if (do_fork(org, outer, repo_name)) {
         log(chalk.whiteBright(chalk.bgRed(`${repo_name} is added to kern-crates org.`)));
@@ -26,10 +25,13 @@ export function fork(fork_list: UserRepo[], non_owned: UserRepo[], org: string) 
 }
 
 // Sync all non_onwed repos.
-export function sync(non_owned: UserRepo[]) {
-  for (const repo of non_owned) {
-    const repo_name = to_string(repo);
-    if (do_sync(repo, repo_name)) {
+export function sync(repos: OwnedRepo[]) {
+  for (const repo of repos) {
+    // skip owned repos
+    if (repo.non_owned === null) continue;
+
+    const repo_name = to_string(repo.owned);
+    if (do_sync(repo.owned, repo_name)) {
       log(`${repo_name} synced.`);
     } else {
       throw_err(`${repo_name} is not synced.`);
@@ -39,12 +41,12 @@ export function sync(non_owned: UserRepo[]) {
 
 /// Archive repos that are archived as parent.
 // Returns a set of newly archived repos.
-export function archive(non_owned: UserRepo[]): Set<string> {
-  let archived = new Set();
-  for (const repo of non_owned) {
-    if (repo.isArchived) {
-      const repo_name = to_string(repo);
-      if (do_archive(repo, repo_name)) {
+export function archive(repos: OwnedRepo[]): Set<string> {
+  let archived = new Set<string>();
+  for (const repo of repos) {
+    if (repo.non_owned?.isArchived) {
+      const repo_name = to_string(repo.owned);
+      if (do_archive(repo.owned, repo_name)) {
         archived.add(repo_name);
         log(chalk.magenta(`${repo_name} archived.`));
       } else {
