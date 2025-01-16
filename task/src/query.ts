@@ -15,9 +15,11 @@ export const repos = `query ($login: String!, $num: Int = 100, $cursor: String) 
       totalCount
       nodes {
         name
+        isArchived
         parent {
           owner { login }
           name
+          isArchived
         }
       }
       pageInfo { hasNextPage endCursor }
@@ -32,9 +34,10 @@ export type Repos = {
 export type RepositoryOwner = {
   repositories: {
     totalCount: number,
+    isArchived: boolean,
     nodes: {
       name: string,
-      parent: null | { owner: { login: string }, name: string }
+      parent: null | { owner: { login: string }, name: string, isArchived: boolean }
     }[]
   }
 }
