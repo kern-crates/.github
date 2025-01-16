@@ -30,7 +30,7 @@ export function sync(repos: OwnedRepo[]) {
     // skip owned repos
     if (repo.non_owned === null) continue;
 
-    const repo_name = to_string(repo.owned);
+    const repo_name = to_string(repo.non_owned);
     if (do_sync(repo.owned, repo_name)) {
       log(`${repo_name} synced.`);
     } else {
@@ -46,7 +46,7 @@ export function archive(repos: OwnedRepo[]): Set<string> {
   for (const repo of repos) {
     if (repo.non_owned?.isArchived) {
       const repo_name = to_string(repo.owned);
-      if (do_archive(repo.owned, repo_name)) {
+      if (do_archive(repo.owned, to_string(repo.non_owned))) {
         archived.add(repo_name);
         log(chalk.magenta(`${repo_name} archived.`));
       } else {
