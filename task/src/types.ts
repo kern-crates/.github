@@ -4,7 +4,7 @@ import * as query from "./query.ts";
 export type UserRepo = {
   user: string,
   repo: string,
-  isArchived: boolean,
+  isArchived?: boolean,
 }
 
 export type OwnedRepo = {

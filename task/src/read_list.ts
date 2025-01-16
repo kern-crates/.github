@@ -24,7 +24,7 @@ function read_list(path: string): UserRepo[] {
     const [user, repo] = line.split("/").map(word => word.trim());
     if (!user) { throw new Error(`No user in \`${line}\`.`); }
     if (!repo) { throw new Error(`No repo in \`${line}\`.`); }
-    return { user, repo, isArchived: false };
+    return { user, repo };
   }).sort(cmp);
 }
 
