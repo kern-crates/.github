@@ -14,8 +14,7 @@ export function fork(fork_list: UserRepo[], non_owned: Set<string>, org: string)
   for (const outer of fork_list) {
     const repo_name = to_string(outer);
 
-    if (non_owned.has(repo_name)) {
-      // need forking
+    if (!non_owned.has(repo_name)) {
       if (do_fork(org, outer, repo_name)) {
         log(chalk.whiteBright(chalk.bgRed(`${repo_name} is added to kern-crates org.`)));
       } else {
