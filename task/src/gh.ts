@@ -8,42 +8,51 @@ export type Output = {
   os_checker_config: { [key: string]: {} },
 };
 
-/**
- * any non_owned matches against repo_in_sync_list => need syncing
- * all non_owned don't match against repo_in_sync_list: UserRepo => need forking
- *
- * 返回值为一个字符串数组，它代表 fork 或者 sync 成功的仓库清单。
- *
- * 该函数在执行 fork 或者 sync 命令过程中出现错误，会抛出错误，不再往后运行；
- * 因此该清单的每个仓库保证完成了相应的操作。
- */
-export function sync_or_fork(fork_list: UserRepo[], owned_repos: OwnedRepo[], owner: string): string[] {
-  const non_onwed = owned_repos.map(val => val.non_owned);
-  let repos: string[] = [];
-
+// Scan item from fork_list, if it's not found in non_onwed repos, do the fork.
+export function fork(fork_list: UserRepo[], non_owned: UserRepo[], org: string) {
   for (const outer of fork_list) {
     const repo_name = to_string(outer);
-    const pos = non_onwed.findIndex(val => val?.user === outer.user && val.repo === outer.repo);
+    const pos = non_owned.findIndex(val => val.user === outer.user && val.repo === outer.repo);
 
     if (pos === -1) {
       // need forking
-      if (do_fork(owner, outer, repo_name)) {
-        repos.push(repo_name);
+      if (do_fork(org, outer, repo_name)) {
         log(chalk.whiteBright(chalk.bgRed(`${repo_name} is added to kern-crates org.`)));
       } else {
         throw_err(`${repo_name} is not forked.`);
       }
+    }
+  }
+}
+
+// Sync all non_onwed repos.
+export function sync(non_owned: UserRepo[]) {
+  for (const repo of non_owned) {
+    const repo_name = to_string(repo);
+    if (do_sync(repo, repo_name)) {
+      log(`${repo_name} synced.`);
     } else {
-      // need syncing
-      if (do_sync(owned_repos[pos].owned, repo_name)) {
-        repos.push(repo_name);
+      throw_err(`${repo_name} is not synced.`);
+    }
+  }
+}
+
+/// Archive repos that are archived as parent.
+// Returns a set of newly archived repos.
+export function archive(non_owned: UserRepo[]): Set<string> {
+  let archived = new Set();
+  for (const repo of non_owned) {
+    if (repo.isArchived) {
+      const repo_name = to_string(repo);
+      if (do_archive(repo, repo_name)) {
+        archived.add(repo_name);
+        log(chalk.magenta(`${repo_name} archived.`));
       } else {
-        throw_err(`${repo_name} is not synced.`);
+        throw_err(`${repo_name} is not archived.`);
       }
     }
   }
-
-  return repos;
+  return archived;
 }
 
 /**
@@ -52,12 +61,16 @@ export function sync_or_fork(fork_list: UserRepo[], owned_repos: OwnedRepo[], ow
  * repo_list 为一个字符串数组，它为 kern-crates 组织中的所有仓库名称，按照 `user/repo` 格式，但注意：
  * 1. 当仓库是 forked 产生的，那么仓库名称指向父仓库，而不是 kern-crates
  * 2. 该列表排除了来自 exclude_list.txt 中的仓库；由于上一条，对于 forked 仓库，exclude_list 应指定为它的父仓库
+ * 3. 当 org 内的仓库状态是 archived，也不会放入 repo_list
  *
  * os_checker_config 是一个 object，为 os-checker 所需的 JSON 配置文件。
  */
-export function gen_output(repos: string[], owned_repos: OwnedRepo[], exclude_list: UserRepo[]): Output {
+export function gen_output(owned_repos: OwnedRepo[], exclude_list: UserRepo[]): Output {
+  let repos = [];
   // generate source repo list
   for (const repo of owned_repos) {
+    if (repo.owned.isArchived) continue;
+
     if (repo.non_owned) {
       repos.push(to_string(repo.non_owned));
     } else {
@@ -80,14 +93,24 @@ export function gen_output(repos: string[], owned_repos: OwnedRepo[], exclude_li
   return { repo_list, os_checker_config: config };
 }
 
-function do_sync(owned: UserRepo, target: string) {
-  // Sync remote fork from its parent
-  // src: https://cli.github.com/manual/gh_repo_sync
-  const cmd = `gh repo sync ${owned.user}/${owned.repo} --force`;
+function do_archive(repo: UserRepo, target: string) {
+  // Archive the repo.
+  // src: https://cli.github.com/manual/gh_repo_archive
+
+  // It won't err to call this multiple times.
+  // To unarchive, click setting tab on the webpage to make it.
+  const cmd = `gh repo archive -y ${repo.user}/${repo.repo}`;
   return do_(cmd, target);
 }
 
-function do_fork(owner: string, outer: UserRepo, target: string) {
+function do_sync(repo: UserRepo, target: string) {
+  // Sync remote fork from its parent
+  // src: https://cli.github.com/manual/gh_repo_sync
+  const cmd = `gh repo sync ${repo.user}/${repo.repo} --force`;
+  return do_(cmd, target);
+}
+
+function do_fork(org: string, outer: UserRepo, target: string) {
   // gh repo fork non_owned --org kern-crates --default-branch-only
   // src: https://cli.github.com/manual/gh_repo_fork
 
@@ -100,7 +123,7 @@ function do_fork(owner: string, outer: UserRepo, target: string) {
   // $ gh repo fork os-checker/test-rename-old --fork-name test-rename-old --org kern-crates --default-branch-only
   // failed to fork: HTTP 403: Name already exists on this account (https://api.github.com/repositories/917460658/forks)
 
-  const cmd = `gh repo fork ${outer.user}/${outer.repo} --fork-name ${outer.repo} --org ${owner} --default-branch-only`;
+  const cmd = `gh repo fork ${outer.user}/${outer.repo} --fork-name ${outer.repo} --org ${org} --default-branch-only`;
   return do_(cmd, target);
 }
 

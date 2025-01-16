@@ -34,9 +34,9 @@ export type Repos = {
 export type RepositoryOwner = {
   repositories: {
     totalCount: number,
-    isArchived: boolean,
     nodes: {
       name: string,
+      isArchived: boolean,
       parent: null | { owner: { login: string }, name: string, isArchived: boolean }
     }[]
   }
