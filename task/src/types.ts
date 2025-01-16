@@ -33,8 +33,12 @@ export function gen_owned_repos(owner: string, q: query.RepositoryOwner): OwnedR
 // If parent repo is not archived, while the org repo is, warn against it.
 export function check_archived(repos: OwnedRepo[]) {
   for (const repo of repos) {
-    if (repo.owned.isArchived && repo.non_owned && !repo.non_owned.isArchived) {
-      console.log(chalk.magenta(`The parent ${to_string(repo.non_owned)} is not archived, but itself ${to_string(repo.owned)} is archived.`));
+    if (repo.owned.isArchived) {
+      if (repo.non_owned && !repo.non_owned.isArchived) {
+        console.log(chalk.magentaBright(`The parent ${to_string(repo.non_owned)} is not archived, but itself ${to_string(repo.owned)} is archived.`));
+      } else {
+        console.log(chalk.magenta(`${to_string(repo.owned)} is archived.`));
+      }
     }
   }
 }
