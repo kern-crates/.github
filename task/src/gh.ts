@@ -35,13 +35,13 @@ export function sync(repos: OwnedRepo[]) {
     // skip owned repos
     if (repo.non_owned === null) continue;
 
-    const parent_name = to_string(repo.non_owned);
-    if (do_sync(repo.owned, parent_name)) {
-      log(`${parent_name} synced.`);
-    } else if (maintain.has(parent_name)) {
-      log(`${parent_name} is not synced, but maintained by kern-crates.`);
+    const parent = to_string(repo.non_owned);
+    if (do_sync(repo.owned, parent)) {
+      log(`${parent} synced.`);
+    } else if (maintain.has(parent)) {
+      log(`${parent} is not synced, but maintained by kern-crates.`);
     } else {
-      throw_err(`${parent_name} is not synced.`);
+      throw_err(`${parent} is not synced.`);
     }
   }
 }
