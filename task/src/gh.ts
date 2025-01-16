@@ -29,7 +29,7 @@ export function sync_or_fork(sync_list: UserRepo[], owned_repos: OwnedRepo[], ow
       // need forking
       if (do_fork(owner, outer, repo_name)) {
         repos.push(repo_name);
-        log(chalk.white(chalk.bgRed(`${repo_name} is added to kern-crates org.`)));
+        log(chalk.whiteBright(chalk.bgRed(`${repo_name} is added to kern-crates org.`)));
       } else {
         throw_err(`${repo_name} is not forked.`);
       }
@@ -96,7 +96,17 @@ function do_sync(owned: UserRepo, target: string) {
 function do_fork(owner: string, outer: UserRepo, target: string) {
   // gh repo fork non_owned --org kern-crates --default-branch-only
   // src: https://cli.github.com/manual/gh_repo_fork
-  const cmd = `gh repo fork ${outer.user}/${outer.repo} --org ${owner} --default-branch-only`;
+
+  // This produces duplicated repo.
+  // $ gh repo fork os-checker/test-rename-old --org kern-crates --default-branch-only
+  // ✓ Created fork kern-crates/test-rename-new-2
+  // ? Would you like to clone the fork? (y/N)
+  //
+  // This errs.
+  // $ gh repo fork os-checker/test-rename-old --fork-name test-rename-old --org kern-crates --default-branch-only
+  // failed to fork: HTTP 403: Name already exists on this account (https://api.github.com/repositories/917460658/forks)
+
+  const cmd = `gh repo fork ${outer.user}/${outer.repo} --fork-name ${outer.repo} --org ${owner} --default-branch-only`;
   return do_(cmd, target);
 }
 
@@ -139,5 +149,5 @@ function handleExecOutput(cmd: string, error: any, stdout: string, stderr: strin
 }
 
 function throw_err(err: string) {
-  throw new Error(chalk.white(chalk.bgRed(err)));
+  throw new Error(chalk.whiteBright(chalk.bgRed(err)));
 }
