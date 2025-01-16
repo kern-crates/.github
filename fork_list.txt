@@ -102,4 +102,3 @@ shilei-massclouds/task
 shilei-massclouds/taskctx
 shilei-massclouds/wait_queue
 yuoo655/ext4_rs
-os-checker/test-rename-old

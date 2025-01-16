@@ -4,7 +4,7 @@
 
 [模块列表](https://kern-crates.github.io/.github/)
 
-[同步列表](/profile/sync_list_CN.md)
+[添加仓库到 kern-crates 组织](/profile/fork_list.md)
 
 <!--
 
