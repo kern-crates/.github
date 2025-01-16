@@ -96,7 +96,17 @@ function do_sync(owned: UserRepo, target: string) {
 function do_fork(owner: string, outer: UserRepo, target: string) {
   // gh repo fork non_owned --org kern-crates --default-branch-only
   // src: https://cli.github.com/manual/gh_repo_fork
-  const cmd = `gh repo fork ${outer.user}/${outer.repo} --org ${owner} --default-branch-only`;
+
+  // This produces duplicated repo.
+  // $ gh repo fork os-checker/test-rename-old --org kern-crates --default-branch-only
+  // ✓ Created fork kern-crates/test-rename-new-2
+  // ? Would you like to clone the fork? (y/N)
+  //
+  // This errs.
+  // $ gh repo fork os-checker/test-rename-old --fork-name test-rename-old --org kern-crates --default-branch-only
+  // failed to fork: HTTP 403: Name already exists on this account (https://api.github.com/repositories/917460658/forks)
+
+  const cmd = `gh repo fork ${outer.user}/${outer.repo} --fork-name ${outer.repo} --org ${owner} --default-branch-only`;
   return do_(cmd, target);
 }
 
