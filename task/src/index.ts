@@ -32,6 +32,7 @@ async function main() {
   check_archived(owned_repos);
 
   const non_owned = owned_repos.map(val => val.non_owned).filter(x => x !== null);
+  non_owned.sort((a, b) => to_string(a).localeCompare(to_string(b)));
 
   sync(non_owned);
   fork(fork_list, non_owned, org);
