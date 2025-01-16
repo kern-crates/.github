@@ -31,8 +31,8 @@ export function sync(repos: OwnedRepo[]) {
   const maintain = read_maintain_list();
 
   for (const repo of repos) {
-    // skip owned repos
-    if (repo.non_owned === null) continue;
+    // skip owned repos or archived repo
+    if (repo.non_owned === null || repo.non_owned.isArchived === true) continue;
 
     const parent = to_string(repo.non_owned);
     if (do_sync(repo.owned, parent)) {
