@@ -1,4 +1,4 @@
-import { type UserRepo } from "./types.ts";
+import { to_string, type UserRepo } from "./types.ts";
 import { readFileSync } from "node:fs";
 
 /** 
@@ -34,4 +34,8 @@ export function read_fork_list(): UserRepo[] {
 
 export function read_exclude_list(): UserRepo[] {
   return read_list("../exclude_list.txt");
+}
+
+export function read_maintain_list(): Set<string> {
+  return new Set(read_list("../maintain_list.txt").map(to_string));
 }

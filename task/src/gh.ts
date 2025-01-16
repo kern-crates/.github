@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { log } from "console";
 import { execSync } from "child_process";
 import { OwnedRepo, UserRepo, to_string } from "./types.ts";
+import { read_maintain_list } from "./read_list.ts";
 
 export type Output = {
   repo_list: string[],
@@ -26,15 +27,21 @@ export function fork(fork_list: UserRepo[], non_owned: Set<string>, org: string)
 
 // Sync all non_onwed repos.
 export function sync(repos: OwnedRepo[]) {
+  // Repos that are forked to kern-crates as well as modified in kern-crates, 
+  // especially with HEAD diverging from parent repos.
+  const maintain = read_maintain_list();
+
   for (const repo of repos) {
     // skip owned repos
     if (repo.non_owned === null) continue;
 
-    const repo_name = to_string(repo.non_owned);
-    if (do_sync(repo.owned, repo_name)) {
-      log(`${repo_name} synced.`);
+    const parent = to_string(repo.non_owned);
+    if (do_sync(repo.owned, parent)) {
+      log(`${parent} synced.`);
+    } else if (maintain.has(parent)) {
+      log(`${parent} is not synced, but maintained by kern-crates.`);
     } else {
-      throw_err(`${repo_name} is not synced.`);
+      throw_err(`${parent} is not synced.`);
     }
   }
 }
