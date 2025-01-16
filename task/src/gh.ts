@@ -17,11 +17,11 @@ export type Output = {
  * 该函数在执行 fork 或者 sync 命令过程中出现错误，会抛出错误，不再往后运行；
  * 因此该清单的每个仓库保证完成了相应的操作。
  */
-export function sync_or_fork(sync_list: UserRepo[], owned_repos: OwnedRepo[], owner: string): string[] {
+export function sync_or_fork(fork_list: UserRepo[], owned_repos: OwnedRepo[], owner: string): string[] {
   const non_onwed = owned_repos.map(val => val.non_owned);
   let repos: string[] = [];
 
-  for (const outer of sync_list) {
+  for (const outer of fork_list) {
     const repo_name = to_string(outer);
     const pos = non_onwed.findIndex(val => val?.user === outer.user && val.repo === outer.repo);
 
@@ -42,12 +42,6 @@ export function sync_or_fork(sync_list: UserRepo[], owned_repos: OwnedRepo[], ow
       }
     }
   }
-
-  // 如何处理不在 sync_list 中的 forked 仓库？
-  // 当前不处理这些未在 sync_list 的 forked 仓库，以防止父仓库清空或者删除等操作造成备份仓库失效。
-  // sync_list 存在的意义就是同步仓库，当第一次同步该仓库时，fork 它到 kern-crates。
-  // 如果仓库不再处于 sync_list，那么有理由认为处于某种原因不 sync 它 —— 因此不处理是合理的。
-  // 如果意外把一个仓库从 sync_list 中移除了，把它添加回 sync_list 即可。
 
   return repos;
 }

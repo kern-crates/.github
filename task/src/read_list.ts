@@ -2,10 +2,10 @@ import { type UserRepo } from "./types.ts";
 import { readFileSync } from "node:fs";
 
 /** 
- * Returns path to `sync_list.txt`, or `sync_list_test.txt` if `TEST` is set.
+ * Returns path to `fork_list.txt`, or `fork_list_test.txt` if `TEST` is set.
  * */
-function sync_list_txt() {
-  return (process.env.TEST === "true") ? "test/sync_list_test.txt" : "../sync_list.txt";
+function fork_list_txt() {
+  return (process.env.TEST === "true") ? "test/fork_list_test.txt" : "../fork_list.txt";
 }
 
 function cmp(a: UserRepo, b: UserRepo): number {
@@ -28,8 +28,8 @@ function read_list(path: string): UserRepo[] {
   }).sort(cmp);
 }
 
-export function read_sync_list(): UserRepo[] {
-  return read_list(sync_list_txt());
+export function read_fork_list(): UserRepo[] {
+  return read_list(fork_list_txt());
 }
 
 export function read_exclude_list(): UserRepo[] {
