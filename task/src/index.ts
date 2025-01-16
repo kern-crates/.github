@@ -31,16 +31,17 @@ async function main() {
   const owned_repos = gen_owned_repos(org, repositoryOwner);
   check_archived(owned_repos);
 
-  const non_owned = owned_repos.map(val => val.non_owned).filter(x => x !== null);
-  non_owned.sort((a, b) => to_string(a).localeCompare(to_string(b)));
+  sync(owned_repos);
 
-  sync(non_owned);
+  const non_owned = new Set(
+    owned_repos.map(val => val.non_owned).filter(x => x !== null).map(to_string)
+  );
   fork(fork_list, non_owned, org);
 
-  const archived = archive(non_owned);
+  const archived = archive(owned_repos);
   // update archived state for org
   owned_repos.forEach((repo, idx) => {
-    if (repo.non_owned && archived.has(to_string(repo.non_owned)))
+    if (archived.has(to_string(repo.owned)))
       owned_repos[idx].owned.isArchived = true;
   });
 
