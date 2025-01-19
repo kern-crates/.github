@@ -51,6 +51,8 @@ guoweikang/osl
 os-checker/docs
 os-checker/os-checker
 os-checker/os-checker.github.io
+os-module/domain-lib
+os-module/domains
 qclic/e1000e-frame
 qclic/fdt-parser
 qclic/sparreal-os
