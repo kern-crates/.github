@@ -14,6 +14,10 @@ jobs:
         # features: ["", "--all-features"] # default features or all features
     steps:
     - uses: actions/checkout@v4
+    - uses: taiki-e/install-action@v2
+      with:
+        # Add more tools that can be install from their github release assets (via cargo-binstall)
+        tool: cargo-hack,cargo-binutils
     - uses: dtolnay/rust-toolchain@nightly
       with:
         toolchain: ${{ matrix.rust-toolchain }}
