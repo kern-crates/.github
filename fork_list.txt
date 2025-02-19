@@ -7,6 +7,7 @@ Starry-OS/Starry-Old
 ZR233/arm-gic-driver
 ZR233/arm-pl011-rs
 ZR233/ostool
+ZR233/rdrive
 arceos-hypervisor/arceos-umhv
 arceos-hypervisor/arm_vcpu
 arceos-hypervisor/arm_vgic
