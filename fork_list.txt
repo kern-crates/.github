@@ -1,5 +1,5 @@
 AsyncModules/embassy-priority
-Azure-stars/elf_parser_rs
+Azure-stars/kernel_elf_parser
 Byte-OS/ByteOS
 Byte-OS/lose-net-stack
 Byte-OS/polyhal
