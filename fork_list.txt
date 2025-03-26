@@ -7,7 +7,6 @@ Starry-OS/Starry-Old
 ZR233/arm-gic-driver
 ZR233/arm-pl011-rs
 ZR233/ostool
-ZR233/rdrive
 arceos-hypervisor/arm_vcpu
 arceos-hypervisor/arm_vgic
 arceos-hypervisor/axaddrspace
@@ -46,6 +45,7 @@ arceos-org/percpu
 arceos-org/scheduler
 arceos-org/starry-next
 arceos-org/timer_list
+drivercraft/rdrive
 elliott10/e1000-driver
 elliott10/lwext4_rust
 guoweikang/osl
