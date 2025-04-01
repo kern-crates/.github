@@ -7,5 +7,6 @@ rcore-os/libc-test
 os-checker/docs
 os-checker/os-checker.github.io
 AsyncModules/embassy-priority
+KMSorSMS/embassy_preempt
 qclic/e1000e-frame
 seL4/rust-sel4
