@@ -4,8 +4,10 @@ kern-crates/testing
 kern-crates/test-test-repo
 kern-crates/kern-crates.github.io
 rcore-os/libc-test
+os-checker/book
 os-checker/docs
 os-checker/os-checker.github.io
+os-checker/os-checker-action
 AsyncModules/embassy-priority
 KMSorSMS/embassy_preempt
 qclic/e1000e-frame
