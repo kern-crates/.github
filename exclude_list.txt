@@ -12,3 +12,5 @@ AsyncModules/embassy-priority
 KMSorSMS/embassy_preempt
 qclic/e1000e-frame
 seL4/rust-sel4
+embassy-rs/embassy
+ariel-os/ariel-os
