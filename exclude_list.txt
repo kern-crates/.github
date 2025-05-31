@@ -3,6 +3,7 @@ kern-crates/docs
 kern-crates/testing
 kern-crates/test-test-repo
 kern-crates/kern-crates.github.io
+kern-crates/hugo-book-template
 rcore-os/libc-test
 os-checker/book
 os-checker/docs
