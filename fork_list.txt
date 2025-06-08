@@ -110,4 +110,5 @@ shilei-massclouds/sys
 shilei-massclouds/task
 shilei-massclouds/taskctx
 shilei-massclouds/wait_queue
+yfblock/libc-core
 yuoo655/ext4_rs
