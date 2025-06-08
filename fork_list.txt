@@ -50,10 +50,12 @@ arceos-org/percpu
 arceos-org/scheduler
 arceos-org/starry-next
 arceos-org/timer_list
+ariel-os/ariel-os
 drivercraft/CrabUSB
 drivercraft/rdrive
 elliott10/e1000-driver
 elliott10/lwext4_rust
+embassy-rs/embassy
 guoweikang/osl
 os-checker/docs
 os-checker/os-checker
