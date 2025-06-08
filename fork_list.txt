@@ -5,6 +5,10 @@ Byte-OS/lose-net-stack
 Byte-OS/polyhal
 KMSorSMS/embassy_preempt
 Starry-OS/Starry-Old
+Starry-OS/axns
+Starry-OS/axprocess
+Starry-OS/axsignal
+Starry-OS/weak-map
 ZR233/arm-gic-driver
 ZR233/arm-pl011-rs
 ZR233/ostool
