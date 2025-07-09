@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone kern-crates/.github
-        run: 
+        run: |
           cd ~
           git config --global user.name "zjp-CN[bot]"
           git config --global user.email "zjp-CN[bot]@users.noreply.github.com"
@@ -27,7 +27,7 @@ jobs:
           echo "成功 clone kern-crates/.github"
 
       - name: Switch to current branch
-        run:
+        run: |
           cd ~/.github
           export GITHUB_REF=${{ github.ref }}
           echo "The branch name is $GITHUB_REF"
@@ -37,7 +37,7 @@ jobs:
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
       - name: Init submodules
-        run: 
+        run: |
           cd ~/.github
           git submodule update --init
           cd crates
@@ -49,7 +49,7 @@ jobs:
         run: cd ~/.github/crates && ./refined_list.sh
 
       - name: Commit refined_list
-        run:
+        run: |
           cd ~/.github
           git status
           git add .
