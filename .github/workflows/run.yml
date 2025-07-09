@@ -45,6 +45,11 @@ jobs:
           ls -alh starry-crates
           ls -alh axvisor-crates
 
+      - name: Update submodules
+        run: |
+          cd ~/.github
+          git submodule foreach 'git checkout main && git pull origin main'
+
       - name: Update refined_list
         run: cd ~/.github/crates && ./refined_list.sh
 
