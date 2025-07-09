@@ -51,7 +51,7 @@ async function main() {
   for (const repo of refined_list) {
     // os-checker_config filters out archived repos
     const name = to_string(repo);
-    if (output.os_checker_config[name]) out[name] = [];
+    if (output.os_checker_config[name]) out[name] = {};
   }
   writeFileSync("os-checker_config.json", JSON.stringify(out, null, 2));
 }
