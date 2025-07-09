@@ -29,8 +29,8 @@ jobs:
       - name: Switch to current branch
         run:
           cd ~/.github
-          echo The branch name is: ${{ github.ref }}
-          # 提取分支名称（去掉 refs/heads/ 前缀）
+          export GITHUB_REF=${{ github.ref }}
+          echo "The branch name is: $GITHUB_REF"
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
           echo "The branch name is: $BRANCH_NAME"
           git switch $BRANCH_NAME
