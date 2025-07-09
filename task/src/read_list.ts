@@ -29,7 +29,7 @@ function read_list(path: string): UserRepo[] {
 }
 
 export function read_refined_list(): UserRepo[] {
-  return read_list("../refined_list.txt");
+  return read_list("../crates/refined_list.txt");
 }
 
 export function read_fork_list(): UserRepo[] {

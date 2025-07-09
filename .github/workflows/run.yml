@@ -24,14 +24,16 @@ jobs:
           EXECUTE: true
         run: cd task && npm install && npm run start
 
-      - name: Upload os-checker_config.json os-checker_config-full.json
+      - name: Upload os-checker_config.json os-checker_config-full.json refined_list.txt
         env:
           tag: v0.4.0
-          files: os-checker_config.json os-checker_config-full.json
+          files: os-checker_config.json os-checker_config-full.json refined_list.txt
         run: |
+          cp crates/refined_list.txt task
           cd task
           ls -alh
           # create the tag if not exists
           gh release create ${{ env.tag }} --generate-notes --latest -R kern-crates/.github || true 
           gh release upload ${{ env.tag }} --clobber -R kern-crates/.github ${{ env.files }}
           echo ${{ env.files }} "uploaded."
+          rm refined_list.txt
