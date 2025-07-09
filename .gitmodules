@@ -1,0 +1,9 @@
+[submodule "crates/arceos-crates"]
+	path = crates/arceos-crates
+	url = https://github.com/arceos-org/arceos-crates
+[submodule "crates/starry-crates"]
+	path = crates/starry-crates
+	url = https://github.com/Starry-OS/starry-crates
+[submodule "crates/axvisor-crates"]
+	path = crates/axvisor-crates
+	url = https://github.com/arceos-hypervisor/axvisor-crates

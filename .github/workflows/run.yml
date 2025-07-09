@@ -5,15 +5,63 @@ on:
     - cron: '0 0/3 * * *'
   push:
     branches:
-      - main
   workflow_dispatch:
 
 env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
+  update-refined-list:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone kern-crates/.github
+        run: |
+          cd ~
+          git config --global user.name "zjp-CN[bot]"
+          git config --global user.email "zjp-CN[bot]@users.noreply.github.com"
+          git config --global committer.name "zjp-CN[bot]"
+          git config --global committer.email "zjp-CN[bot]@users.noreply.github.com"
+          
+          echo "正在 clone kern-crates/.github"
+          git clone https://x-access-token:$(GH_TOKEN)@github.com/kern-crates/.github.git
+          echo "成功 clone kern-crates/.github"
+
+      - name: Switch to current branch
+        run: |
+          cd ~/.github
+          export GITHUB_REF=${{ github.ref }}
+          echo "The branch name is $GITHUB_REF"
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          echo "The branch name is $BRANCH_NAME"
+          git switch $BRANCH_NAME
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Init submodules
+        run: |
+          cd ~/.github
+          git submodule update --init
+          cd crates
+          ls -alh arceos-crates
+          ls -alh starry-crates
+          ls -alh axvisor-crates
+
+      - name: Update refined_list
+        run: cd ~/.github/crates && ./refined_list.sh
+
+      - name: Commit refined_list
+        run: |
+          cd ~/.github
+          git status
+          git add .
+          echo "正在提交：$(git status --porcelain)"
+          git commit -m "[bot] update refined_list.txt"
+          echo "提交成功，正在推送到 .github 仓库（分支：${{ env.BRANCH_NAME }}）"
+          git push
+          echo "成功推送到 .github 仓库（分支：${{ env.BRANCH_NAME }}）"
+
   run:
     runs-on: ubuntu-latest
+    needs: update-refined-list
     steps:
       - uses: actions/checkout@v4
 
@@ -24,14 +72,16 @@ jobs:
           EXECUTE: true
         run: cd task && npm install && npm run start
 
-      - name: Upload os-checker_config.json os-checker_config-full.json
+      - name: Upload os-checker_config.json os-checker_config-full.json refined_list.txt
         env:
           tag: v0.4.0
-          files: os-checker_config.json os-checker_config-full.json
+          files: os-checker_config.json os-checker_config-full.json refined_list.txt
         run: |
+          cp crates/refined_list.txt task
           cd task
           ls -alh
           # create the tag if not exists
           gh release create ${{ env.tag }} --generate-notes --latest -R kern-crates/.github || true 
           gh release upload ${{ env.tag }} --clobber -R kern-crates/.github ${{ env.files }}
           echo ${{ env.files }} "uploaded."
+          rm refined_list.txt
