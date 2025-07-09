@@ -30,9 +30,9 @@ jobs:
         run:
           cd ~/.github
           export GITHUB_REF=${{ github.ref }}
-          echo "The branch name is: $GITHUB_REF"
+          echo "The branch name is $GITHUB_REF"
           BRANCH_NAME=${GITHUB_REF#refs/heads/}
-          echo "The branch name is: $BRANCH_NAME"
+          echo "The branch name is $BRANCH_NAME"
           git switch $BRANCH_NAME
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
 
