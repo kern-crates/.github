@@ -12,8 +12,32 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
+  update-refined-list:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update refined_list
+        run: cd crates && ./refined_list.sh
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GH_TOKEN }} 
+          add-paths: crates/refined_list.txt
+          commit-message: "[bot] Update refined_list.txt"
+          author: zjp-bot <zjp[bot]@users.noreply.github.com>
+          delete-branch: true
+          branch: update-refined-list
+          base: main
+          title: '[bot] Update refined_list.txt'
+
   run:
     runs-on: ubuntu-latest
+    needs: update-refined-list
     steps:
       - uses: actions/checkout@v4
 
