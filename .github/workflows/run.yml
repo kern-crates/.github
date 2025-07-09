@@ -23,7 +23,7 @@ jobs:
           git config --global committer.email "zjp-CN[bot]@users.noreply.github.com"
           
           echo "正在 clone kern-crates/.github"
-          git clone https://x-access-token:$(GH_TOKEN)@github.com/kern-crates/.github.git
+          git clone https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/kern-crates/.github.git
           echo "成功 clone kern-crates/.github"
 
       - name: Switch to current branch
