@@ -28,6 +28,10 @@ function read_list(path: string): UserRepo[] {
   }).sort(cmp);
 }
 
+export function read_refined_list(): UserRepo[] {
+  return read_list("../refined_list.txt");
+}
+
 export function read_fork_list(): UserRepo[] {
   return read_list(fork_list_txt());
 }

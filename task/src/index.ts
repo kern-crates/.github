@@ -4,15 +4,12 @@ import { writeFileSync } from "node:fs";
 import * as query from "./query.ts";
 import { archive, fork, gen_output, sync } from "./gh.ts";
 import { check_archived, gen_owned_repos, to_string } from "./types.ts";
-import { read_exclude_list, read_fork_list as read_fork_list } from "./read_list.ts";
+import { read_refined_list } from "./read_list.ts";
 
 async function main() {
 
-  const exclude_list = read_exclude_list();
-  log("exclude_list", exclude_list);
-
-  const fork_list = read_fork_list();
-  log("fork_list", fork_list);
+  const refined_list = read_refined_list();
+  log("refined_list", refined_list);
 
   const octokit = new Octokit({ auth: query.gh_token() });
 
@@ -36,7 +33,7 @@ async function main() {
   const non_owned = new Set(
     owned_repos.map(val => val.non_owned).filter(x => x !== null).map(to_string)
   );
-  fork(fork_list, non_owned, org);
+  fork(refined_list, non_owned, org);
 
   const archived = archive(owned_repos);
   // update archived state for org
@@ -45,13 +42,18 @@ async function main() {
       owned_repos[idx].owned.isArchived = true;
   });
 
-  const output = gen_output(owned_repos, exclude_list);
+  const output = gen_output(owned_repos, []);
   log("\nrepo_list.length =", output.repo_list.length);
 
-  // writeFileSync("repo_list.json", JSON.stringify(output.repo_list, null, 2));
-  writeFileSync("os-checker_config.json", JSON.stringify(output.os_checker_config, null, 2));
-  writeFileSync("repo_list_raw.json", JSON.stringify({ fork_list, exclude_list, owner: org, owned_repos }, null, 2));
+  writeFileSync("os-checker_config-full.json", JSON.stringify(output.os_checker_config, null, 2));
 
+  let out: { [key: string]: {} } = {};
+  for (const repo of refined_list) {
+    // os-checker_config filters out archived repos
+    const name = to_string(repo);
+    if (output.os_checker_config[name]) out[name] = [];
+  }
+  writeFileSync("os-checker_config.json", JSON.stringify(out, null, 2));
 }
 
 main().then(() => log("\nMain thread done."));

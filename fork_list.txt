@@ -34,6 +34,7 @@ arceos-org/axerrno
 arceos-org/axfs_crates
 arceos-org/axio
 arceos-org/axmm_crates
+arceos-org/axsched
 arceos-org/cap_access
 arceos-org/cpumask
 arceos-org/crate_interface
@@ -47,7 +48,6 @@ arceos-org/linked_list_r4l
 arceos-org/memory_set
 arceos-org/page_table_multiarch
 arceos-org/percpu
-arceos-org/scheduler
 arceos-org/starry-next
 arceos-org/timer_list
 ariel-os/ariel-os
