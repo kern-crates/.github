@@ -7,3 +7,6 @@
 [submodule "crates/axvisor-crates"]
 	path = crates/axvisor-crates
 	url = https://github.com/arceos-hypervisor/axvisor-crates
+[submodule "crates/driver-crates"]
+	path = crates/driver-crates
+	url = https://github.com/drivercraft/driver-crates.git
