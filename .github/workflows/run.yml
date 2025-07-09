@@ -13,26 +13,51 @@ env:
 jobs:
   update-refined-list:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - name: Clone kern-crates/.github
+        run: 
+          cd ~
+          git config --global user.name "zjp-CN[bot]"
+          git config --global user.email "zjp-CN[bot]@users.noreply.github.com"
+          git config --global committer.name "zjp-CN[bot]"
+          git config --global committer.email "zjp-CN[bot]@users.noreply.github.com"
+          
+          echo "正在 clone kern-crates/.github"
+          git clone https://x-access-token:$(GH_TOKEN)@github.com/kern-crates/.github.git
+          echo "成功 clone kern-crates/.github"
+
+      - name: Switch to current branch
+        run:
+          cd ~/.github
+          echo The branch name is: ${{ github.ref }}
+          # 提取分支名称（去掉 refs/heads/ 前缀）
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          echo "The branch name is: $BRANCH_NAME"
+          git switch $BRANCH_NAME
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Init submodules
+        run: 
+          cd ~/.github
+          git submodule update --init
+          cd crates
+          ls -alh arceos-crates
+          ls -alh starry-crates
+          ls -alh axvisor-crates
 
       - name: Update refined_list
-        run: cd crates && ./refined_list.sh
+        run: cd ~/.github/crates && ./refined_list.sh
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.GH_TOKEN }} 
-          add-paths: crates/refined_list.txt
-          commit-message: "[bot] Update refined_list.txt"
-          author: zjp-bot <zjp[bot]@users.noreply.github.com>
-          delete-branch: true
-          branch: update-refined-list
-          base: main
-          title: '[bot] Update refined_list.txt'
+      - name: Commit refined_list
+        run:
+          cd ~/.github
+          git status
+          git add .
+          echo "正在提交：$(git status --porcelain)"
+          git commit -m "[bot] update refined_list.txt"
+          echo "提交成功，正在推送到 .github 仓库（分支：${{ env.BRANCH_NAME }}）"
+          git push
+          echo "成功推送到 .github 仓库（分支：${{ env.BRANCH_NAME }}）"
 
   run:
     runs-on: ubuntu-latest
