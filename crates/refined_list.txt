@@ -8,6 +8,7 @@ ZR233/ostool
 arceos-hypervisor/arm_gicv2
 arceos-hypervisor/arm_vcpu
 arceos-hypervisor/arm_vgic
+arceos-hypervisor/axaddrspace
 arceos-hypervisor/axvisor_api
 arceos-hypervisor/riscv_vcpu
 arceos-hypervisor/x86_vcpu
@@ -53,8 +54,9 @@ drivercraft/fdt-parser
 drivercraft/mbarrier
 drivercraft/nvme
 drivercraft/pcie
+drivercraft/phytium-mci
 drivercraft/rdrive
-qclic/phytium-mci
+drivercraft/sdmmc
 rcore-os/any-uart
 rcore-os/arm-gic-driver
 rcore-os/serial-async
