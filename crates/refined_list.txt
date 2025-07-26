@@ -1,9 +1,6 @@
-Starry-Mix-THU/axfs-ng-vfs
-Starry-Mix-THU/axprocess
-Starry-Mix-THU/axptr
-Starry-Mix-THU/axsignal
-Starry-Mix-THU/extern-trait
-Starry-Mix-THU/weak-map
+Starry-OS/axfs-ng-vfs
+Starry-OS/axprocess
+Starry-OS/axsignal
 ZR233/ostool
 arceos-hypervisor/arm_gicv2
 arceos-hypervisor/arm_vcpu
