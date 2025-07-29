@@ -6,6 +6,7 @@ arceos-hypervisor/arm_gicv2
 arceos-hypervisor/arm_vcpu
 arceos-hypervisor/arm_vgic
 arceos-hypervisor/axaddrspace
+arceos-hypervisor/axvirtio
 arceos-hypervisor/axvisor_api
 arceos-hypervisor/riscv_vcpu
 arceos-hypervisor/x86_vcpu
