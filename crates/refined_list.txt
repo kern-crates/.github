@@ -6,8 +6,11 @@ arceos-hypervisor/arm_gicv2
 arceos-hypervisor/arm_vcpu
 arceos-hypervisor/arm_vgic
 arceos-hypervisor/axaddrspace
+arceos-hypervisor/axdevice_crates
+arceos-hypervisor/axvcpu
 arceos-hypervisor/axvirtio
 arceos-hypervisor/axvisor_api
+arceos-hypervisor/axvmconfig
 arceos-hypervisor/riscv_vcpu
 arceos-hypervisor/x86_vcpu
 arceos-hypervisor/x86_vlapic
