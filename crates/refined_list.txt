@@ -1,6 +1,6 @@
 Starry-OS/axfs-ng-vfs
-Starry-OS/axprocess
-Starry-OS/axsignal
+Starry-OS/starry-process
+Starry-OS/starry-signal
 ZR233/ostool
 arceos-hypervisor/arm_gicv2
 arceos-hypervisor/arm_vcpu
