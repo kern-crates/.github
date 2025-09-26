@@ -10,7 +10,9 @@ arceos-hypervisor/axdevice_base
 arceos-hypervisor/axvcpu
 arceos-hypervisor/axvirtio
 arceos-hypervisor/axvisor_api
+arceos-hypervisor/axvm
 arceos-hypervisor/axvmconfig
+arceos-hypervisor/riscv-h
 arceos-hypervisor/riscv_vcpu
 arceos-hypervisor/x86_vcpu
 arceos-hypervisor/x86_vlapic
