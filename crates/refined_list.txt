@@ -63,3 +63,4 @@ drivercraft/sdmmc
 rcore-os/any-uart
 rcore-os/arm-gic-driver
 rcore-os/serial-async
+arceos-org/arceos

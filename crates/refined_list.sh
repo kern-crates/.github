@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -eoux pipefail
+
 # Avoid inconsistent collation order
 export LC_ALL=C
 
@@ -5,3 +9,6 @@ export LC_ALL=C
 cat arceos-crates/.gitmodules starry-crates/.gitmodules axvisor-crates/.gitmodules driver-crates/.gitmodules |
   grep -oP 'url = https:\/\/github\.com\/\K([^\/]+\/[^\/]+?)(?=\.git|\/|$)' |
   sort | uniq >refined_list.txt
+
+# Add extra repos.
+echo "arceos-org/arceos" >>refined_list.txt
