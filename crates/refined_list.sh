@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -eoux pipefail
+
 # Avoid inconsistent collation order
 export LC_ALL=C
 
