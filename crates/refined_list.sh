@@ -11,4 +11,4 @@ cat arceos-crates/.gitmodules starry-crates/.gitmodules axvisor-crates/.gitmodul
   sort | uniq >refined_list.txt
 
 # Add extra repos.
-cat "arceos-org/arceos" >>refined_list.txt
+echo "arceos-org/arceos" >>refined_list.txt
