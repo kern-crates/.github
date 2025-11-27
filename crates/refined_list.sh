@@ -12,3 +12,4 @@ cat arceos-crates/.gitmodules starry-crates/.gitmodules axvisor-crates/.gitmodul
 
 # Add extra repos.
 echo "arceos-org/arceos" >>refined_list.txt
+echo "asterinas/asterinas" >>refined_list.txt
