@@ -173,6 +173,11 @@ function handleExecOutput(cmd: string, error: any, stdout: string, stderr: strin
   }
 }
 
+declare global {
+  var has_error: number;
+}
+
 function throw_err(err: string) {
-  throw new Error(chalk.whiteBright(chalk.bgRed(err)));
+  global.has_error += 1;
+  console.error(chalk.whiteBright(chalk.bgRed(err)));
 }

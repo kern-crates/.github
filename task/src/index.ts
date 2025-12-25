@@ -7,7 +7,7 @@ import { check_archived, gen_owned_repos, to_string } from "./types.ts";
 import { read_refined_list } from "./read_list.ts";
 
 async function main() {
-
+  global.has_error = 0;
   const refined_list = read_refined_list();
   log("refined_list", refined_list);
 
@@ -44,6 +44,8 @@ async function main() {
 
   const output = gen_output(owned_repos, []);
   log("\nrepo_list.length =", output.repo_list.length);
+
+  if (global.has_error) throw Error(`有 ${global.has_error} 个错误，请检查打印输出`);
 
   writeFileSync("os-checker_config-full.json", JSON.stringify(output.os_checker_config, null, 2));
 
