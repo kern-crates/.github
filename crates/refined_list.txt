@@ -1,7 +1,6 @@
 Starry-OS/axfs-ng-vfs
 Starry-OS/starry-process
 Starry-OS/starry-signal
-ZR233/ostool
 arceos-hypervisor/arm_gicv2
 arceos-hypervisor/arm_vcpu
 arceos-hypervisor/arm_vgic
@@ -56,6 +55,7 @@ drivercraft/dma-api
 drivercraft/fdt-parser
 drivercraft/mbarrier
 drivercraft/nvme
+drivercraft/ostool
 drivercraft/pcie
 drivercraft/phytium-mci
 drivercraft/rdrive
