@@ -8,7 +8,7 @@ export LC_ALL=C
 # Extract user/repo from .gitmodules
 cat arceos-crates/.gitmodules starry-crates/.gitmodules axvisor-crates/.gitmodules driver-crates/.gitmodules |
   awk -F'=' '/url = https:\/\/github\.com\// {
-    match($2, /([^\/]+\/[^\/]+?)(?=\.git|\/|$)/, arr);
+    match($2, /https:\/\/github\.com\/([^\/]+\/[^\/]+?)(?=\.git|\/|$)/, arr);
     if (arr[1] != "arceos-hypervisor/axcpu") {
         print arr[1]
     }
