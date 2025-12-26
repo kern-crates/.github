@@ -4,7 +4,6 @@ Starry-OS/starry-signal
 arceos-hypervisor/arm_vcpu
 arceos-hypervisor/arm_vgic
 arceos-hypervisor/axaddrspace
-arceos-hypervisor/axcpu
 arceos-hypervisor/axdevice
 arceos-hypervisor/axdevice_base
 arceos-hypervisor/axhvc
