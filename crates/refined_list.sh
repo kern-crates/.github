@@ -7,7 +7,8 @@ export LC_ALL=C
 
 # Extract user/repo from .gitmodules
 cat arceos-crates/.gitmodules starry-crates/.gitmodules axvisor-crates/.gitmodules driver-crates/.gitmodules |
-  grep -oP 'url = https:\/\/github\.com\/\K([^\/]+\/[^\/]+?)(?=\.git|\/|$)' |
+  grep -oP 'url = https:\/\/github\.com\/\K([^\/]+\/[^\/]+?)(?=\.git|\/|$)' \
+    -v arceos-hypervisor/axcpu |
   sort | uniq >refined_list.txt
 
 # Add extra repos.
