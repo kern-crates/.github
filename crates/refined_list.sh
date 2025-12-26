@@ -10,7 +10,9 @@ cat arceos-crates/.gitmodules starry-crates/.gitmodules axvisor-crates/.gitmodul
   awk -F'=' '/url = https:\/\/github\.com\// {
     sub(/.*github\.com\//, ""); # 去掉域名及之前的内容
     sub(/\.git$/, "");          # 去掉结尾的 .git（如果存在）
-    print
+    if ($0 != "arceos-hypervisor/axcpu") {
+      print
+    }
   }' | sort | uniq >refined_list.txt
 
 # Add extra repos.
