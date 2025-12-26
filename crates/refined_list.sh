@@ -8,10 +8,9 @@ export LC_ALL=C
 # Extract user/repo from .gitmodules
 cat arceos-crates/.gitmodules starry-crates/.gitmodules axvisor-crates/.gitmodules driver-crates/.gitmodules |
   awk -F'=' '/url = https:\/\/github\.com\// {
-    match($2, /https:\/\/github\.com\/([^\/]+\/[^\/]+?)(?=\.git|\/|$)/, arr);
-    if (arr[1] != "arceos-hypervisor/axcpu") {
-        print arr[1]
-    }
+    sub(/.*github\.com\//, ""); # 去掉域名及之前的内容
+    sub(/\.git$/, "");          # 去掉结尾的 .git（如果存在）
+    print
   }' | sort | uniq >refined_list.txt
 
 # Add extra repos.
